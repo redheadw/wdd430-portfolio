@@ -1,5 +1,3 @@
 export async function GET() {
-  return Response.json({
-    message: "Hello from my WDD430 Portfolio API!"
-  });
+  return Response.json({ message: 'Hello from Next.js API!' });
 }
