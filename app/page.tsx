@@ -1,3 +1,4 @@
+import SkillsCard from "@/components/SkillsCard";
 import ProjectList from "@/components/ProjectList";
 
 const projects = [
@@ -34,6 +35,21 @@ export default function Home() {
       </h2>
 
       <ProjectList projects={projects} />
+
+      <div className="mt-12">
+        <SkillsCard
+          title="Technical Skills I Am Learning"
+          skills={[
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Tailwind CSS"
+          ]}
+        />
+      </div>
     </main>
   );
 }
