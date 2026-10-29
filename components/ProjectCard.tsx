@@ -12,7 +12,7 @@ export default function ProjectCard({
   link
 }: ProjectCardProps) {
   return (
-    <article className="p-4 border-l-4 border-blue-600 bg-gray-50 rounded">
+    <article className="p-4 border-l-4 border-green-700 bg-gray-50 rounded">
       <h3 className="text-xl font-bold mb-2 text-gray-900">
         {title}
       </h3>
@@ -31,7 +31,7 @@ export default function ProjectCard({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-green-700 hover:underline"
           >
             View Project
           </a>
