@@ -1,18 +1,16 @@
-import Link from 'next/link';
+
+import NavLinks from "./NavLinks";
 
 export default function Header() {
   return (
-    <header className="bg-green-700 text-white py-4 shadow-md">
-      <nav className="max-w-4xl mx-auto px-4 flex justify-between items-center">
-        <div id="header-title" className="text-2xl font-bold">
+    <header className="bg-green-700 text-white shadow-md">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 p-4">
+        <h1 className="text-2xl font-bold">
           My Portfolio
-        </div>
-        <ul className="flex gap-6">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/projects">Projects</Link></li>
-        </ul>
-      </nav>
+        </h1>
+
+        <NavLinks />
+      </div>
     </header>
   );
 }
