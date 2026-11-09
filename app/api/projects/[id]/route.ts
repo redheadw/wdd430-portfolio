@@ -1,6 +1,7 @@
 
 import { NextResponse } from "next/server";
-import { getProjectById } from "@/lib/projects-db";
+import { sql } from "@vercel/postgres";
+import type { Project } from "@/lib/projects-db";
 
 export async function GET(
   request: Request,
@@ -8,6 +9,7 @@ export async function GET(
 ) {
   const { id } = await context.params;
 
+  // Validate the project ID
   if (!/^[1-9]\d*$/.test(id)) {
     return NextResponse.json(
       { error: "Invalid project ID" },
@@ -24,14 +26,29 @@ export async function GET(
     );
   }
 
-  const project = getProjectById(projectId);
+  try {
+    // Retrieve the project from PostgreSQL
+    const result = await sql<Project>`
+      SELECT * FROM projects
+      WHERE id = ${projectId}
+    `;
 
-  if (!project) {
+    const project = result.rows[0];
+
+    if (!project) {
+      return NextResponse.json(
+        { error: "Project not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(project);
+  } catch (error) {
+    console.error("Database error:", error);
+
     return NextResponse.json(
-      { error: "Project not found" },
-      { status: 404 }
+      { error: "Failed to fetch project" },
+      { status: 500 }
     );
   }
-
-  return NextResponse.json(project);
 }
