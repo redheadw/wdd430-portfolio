@@ -1,7 +1,6 @@
 
 import { NextResponse } from "next/server";
-import { sql } from "@vercel/postgres";
-import type { Project } from "@/lib/projects-db";
+import { getProjectById } from "@/lib/projects-db";
 
 export async function GET(
   request: Request,
@@ -9,7 +8,6 @@ export async function GET(
 ) {
   const { id } = await context.params;
 
-  // Validate the project ID
   if (!/^[1-9]\d*$/.test(id)) {
     return NextResponse.json(
       { error: "Invalid project ID" },
@@ -27,13 +25,7 @@ export async function GET(
   }
 
   try {
-    // Retrieve the project from PostgreSQL
-    const result = await sql<Project>`
-      SELECT * FROM projects
-      WHERE id = ${projectId}
-    `;
-
-    const project = result.rows[0];
+    const project = await getProjectById(projectId);
 
     if (!project) {
       return NextResponse.json(

@@ -1,7 +1,6 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import { sql } from "@vercel/postgres";
-import type { Project } from "@/lib/projects-db";
+import { getProjects } from "@/lib/projects-db";
 
 export async function GET(request: NextRequest) {
   const type = request.nextUrl.searchParams.get("type");
@@ -14,23 +13,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    let projects;
-
-    if (type) {
-      const result = await sql<Project>`
-        SELECT * FROM projects
-        WHERE type = ${type}
-        ORDER BY id
-      `;
-      projects = result.rows;
-    } else {
-      const result = await sql<Project>`
-        SELECT * FROM projects
-        ORDER BY id
-      `;
-      projects = result.rows;
-    }
-
+    const projects = await getProjects(type);
     return NextResponse.json(projects);
   } catch (error) {
     console.error("Database error:", error);
