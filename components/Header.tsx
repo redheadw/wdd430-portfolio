@@ -1,5 +1,6 @@
 
 import NavLinks from "./NavLinks";
+import { Suspense } from "react";
 
 export default function Header() {
   return (
@@ -9,7 +10,9 @@ export default function Header() {
           My Portfolio
         </h1>
 
-        <NavLinks />
+        <Suspense fallback={<span>Loading navigation...</span>}>
+          <NavLinks />
+        </Suspense>
       </div>
     </header>
   );

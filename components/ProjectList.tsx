@@ -1,10 +1,11 @@
 import ProjectCard from './ProjectCard';
 
 interface Project {
+  id: number;
   title: string;
   description: string;
   technologies: string[];
-  link?: string;
+  link?: string | null;
 }
 
 interface ProjectListProps {

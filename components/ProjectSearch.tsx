@@ -8,18 +8,16 @@ import {
   useSearchParams,
 } from "next/navigation";
 
-export default function ProjectSearch() {
+interface SearchInputProps {
+  currentQuery: string;
+}
+
+function SearchInput({ currentQuery }: SearchInputProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentQuery = searchParams.get("query") ?? "";
   const [searchTerm, setSearchTerm] = useState(currentQuery);
-
-  // Keep the input synchronized with browser navigation
-  useEffect(() => {
-    setSearchTerm(currentQuery);
-  }, [currentQuery]);
 
   // Debounce search updates by 300 milliseconds
   useEffect(() => {
@@ -38,7 +36,7 @@ export default function ProjectSearch() {
         params.delete("query");
       }
 
-      // Reset pagination whenever the search changes
+      // Reset pagination when the search changes
       params.set("page", "1");
 
       router.push(`${pathname}?${params.toString()}`);
@@ -65,5 +63,17 @@ export default function ProjectSearch() {
         className="w-full rounded-lg border border-gray-300 p-3 text-gray-900 focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-600"
       />
     </div>
+  );
+}
+
+export default function ProjectSearch() {
+  const searchParams = useSearchParams();
+  const currentQuery = searchParams.get("query") ?? "";
+
+  return (
+    <SearchInput
+      key={currentQuery}
+      currentQuery={currentQuery}
+    />
   );
 }
