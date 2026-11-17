@@ -8,6 +8,7 @@ export interface Project {
   type: "opensource" | "school";
   technologies: string[];
   link?: string;
+   year_completed: number | null;
 }
 
 // Get all projects or filter by project type
