@@ -1,4 +1,5 @@
 
+import Link from "next/link";
 import { Suspense } from "react";
 import {
   fetchFilteredProjects,
@@ -76,13 +77,24 @@ export default function ProjectsPage({
 }: ProjectsPageProps) {
   return (
     <main className="p-8">
-      <h1 className="text-3xl font-bold text-green-700">
-        Projects Overview
-      </h1>
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-green-700">
+            Projects Overview
+          </h1>
 
-      <p className="mt-4 mb-6">
-        Browse all my projects.
-      </p>
+          <p className="mt-4">
+            Browse all my projects.
+          </p>
+        </div>
+
+        <Link
+          href="/projects/create"
+          className="inline-flex items-center justify-center rounded-md bg-green-700 px-5 py-3 font-semibold text-white transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+        >
+          + Create New Project
+        </Link>
+      </div>
 
       <Suspense fallback={<p>Loading search...</p>}>
         <ProjectSearch />
